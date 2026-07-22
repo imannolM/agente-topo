@@ -1,0 +1,29 @@
+# --- Núcleo del agente (LangChain / LangGraph) ---
+langchain
+langchain-core
+langchain-classic
+langchain-community
+langgraph
+
+# --- LLM y Embeddings ---
+langchain-groq
+langchain-cohere
+
+# --- RAG: carga de PDFs, splitting y vectorstore ---
+pymupdf
+langchain-text-splitters
+faiss-cpu
+
+# --- Base de datos ---
+sqlalchemy
+pymysql
+mysql-connector-python
+
+# --- Análisis de datos / gráficos ---
+pandas
+matplotlib
+
+# --- Utilidades ---
+pydantic
+python-dotenv
+requests
