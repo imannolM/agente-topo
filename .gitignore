@@ -1,0 +1,8 @@
+# environment variables and sensitive data
+.env
+
+#virtual environment directories
+.venv/
+venv/
+__pycache__/
+*.pyc
