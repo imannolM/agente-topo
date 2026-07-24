@@ -15,12 +15,14 @@ agente_topo/
 │   ├── __init__.py
 │   ├── config.py                # Carga de variables de entorno (.env)
 │   └── llm.py                   # Inicialización de Groq y Cohere
+│   └── prompts.py               # Todos los prompts utilizados
 │
 ├── services/                    # Lógica de negocio
 │   ├── __init__.py
 │   ├── database.py              # Conexión MySQL, validación de accesos y consultas
 │   ├── rag.py                   # Carga de documentos, embeddings y FAISS
 │   └── analytics.py             # Análisis con Pandas, Matplotlib y agente ReAct
+│   └── soporte.py               # Aquí van pedir_info() y agendar_cita()
 │
 ├── agent/                       # Implementación del flujo con LangGraph
 │   ├── __init__.py
@@ -28,6 +30,7 @@ agente_topo/
 │   ├── nodes.py                 # Implementación de los nodos del grafo
 │   ├── edges.py                 # Funciones de enrutamiento entre nodos
 │   └── graph.py                 # Construcción y compilación del StateGraph
+│   └── chains.py                # Aquí va TriajeOut y chain_de_triaje
 │
 └── utils/                       # Funciones auxiliares
     ├── __init__.py
