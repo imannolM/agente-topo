@@ -36,6 +36,7 @@ PERMISOS_LECTURA = {
         "administrativo_catastral",
         TABLA_INVENTARIO,
         "ventas_analitica",
+        "citas_programadas"
     ],
     "cliente": [TABLA_INVENTARIO],
 }

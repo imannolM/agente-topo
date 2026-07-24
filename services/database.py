@@ -1,4 +1,6 @@
 import mysql.connector
+from utils.helpers import normalizar_rol, mapear_folio_a_tabla, validar_acceso_tabla, obtener_campo_autorizado
+from utils.helpers import TABLA_INVENTARIO, CAMPOS_PUBLICOS_INVENTARIO
 
 # Importamos las credenciales desde nuestro módulo central en lugar de userdata.get()
 from core.config import (
@@ -77,6 +79,14 @@ def consulta_base_de_datos(texto_pregunta: str, user_role: str, user_folio: str 
         ]
     ):
         tabla = TABLA_INVENTARIO
+        columna_id = None
+
+    # Caso especial 2 para consultar citas
+    if not tabla and any(
+        termino in texto_normalizado
+        for termino in ["citas", "agenda", "citas programadas"]
+    ):
+        tabla = "citas_programadas"
         columna_id = None
 
     if not tabla:
@@ -250,3 +260,39 @@ def modificacion_base_de_datos(
             cursor.close()
         if conexion:
             conexion.close()
+
+def guardar_cita_bd(nombre: str, telefono: str, fecha: str) -> bool:
+    """Crea la tabla si no existe y guarda los datos de la cita."""
+    conexion = None
+    cursor = None
+    try:
+        conexion = obtener_conexion_db()
+        cursor = conexion.cursor()
+        
+        # 1. Creamos la tabla de citas si es que no existe aún en Aiven
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS citas_programadas (
+                id_cita INT AUTO_INCREMENT PRIMARY KEY,
+                nombre_cliente VARCHAR(100),
+                telefono VARCHAR(20),
+                fecha_preferencia VARCHAR(100),
+                estatus VARCHAR(20) DEFAULT 'Pendiente',
+                fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB;
+        """)
+        
+        # 2. Insertamos los datos del cliente
+        sql = """
+            INSERT INTO citas_programadas 
+            (nombre_cliente, telefono, fecha_preferencia) 
+            VALUES (%s, %s, %s)
+        """
+        cursor.execute(sql, (nombre, telefono, fecha))
+        conexion.commit()
+        return True
+    except Exception as e:
+        print(f"❌ Error al guardar cita en MySQL: {e}")
+        return False
+    finally:
+        if cursor: cursor.close()
+        if conexion: conexion.close()

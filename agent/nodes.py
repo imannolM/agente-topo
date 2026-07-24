@@ -12,7 +12,7 @@ from agent.chains import chain_de_triaje
 from agent.state import AgentState
 from services.soporte import soporte_pedir_info, gestion_agendar_cita
 from core.llm import llm_groq
-from core.prompts import prompt_triaje, obtener_prompt_react
+from core.prompts import obtener_prompt_react
 from utils.helpers import (
     obtener_pregunta_del_estado, 
     normalizar_rol, 
@@ -34,11 +34,7 @@ def nodo_triaje(state: AgentState) -> dict:
     print(f"💬 Pregunta procesada: '{texto_pregunta}' | Rol detectado: {rol_usuario}")
 
     try:
-        # Usamos with_structured_output directamente con nuestro LLM y Prompt
-        llm_estructurado = llm_groq.with_structured_output(TriajeOut)
-        cadena_triaje = prompt_triaje | llm_estructurado
-        
-        salida = cadena_triaje.invoke({
+        salida = chain_de_triaje.invoke({
             "user_role": rol_usuario,
             "pregunta": texto_pregunta
         })
@@ -165,6 +161,7 @@ def nodo_analisis_datos(state: AgentState) -> dict:
     try:
         df = extraer_df_desde_mysql(nombre_tabla)
     except Exception as error:
+        print(f"\n❌ [DEBUG] ERROR REAL EN MYSQL/PANDAS: {error}\n")
         return {
             "messages": [AIMessage(content="No fue posible cargar los datos para el análisis.")],
             "respuesta": "No fue posible cargar los datos para el análisis.",
@@ -209,10 +206,11 @@ def nodo_analisis_datos(state: AgentState) -> dict:
 def nodo_pedir_info(state: AgentState) -> dict:
     print("💬 Ejecutando nodo pedir_info...")
     texto_pregunta = obtener_pregunta_del_estado(state)
-
     resultado_soporte = soporte_pedir_info(texto_pregunta)
 
     return {
+        # 🌟 CORRECCIÓN: Agregamos el AIMessage a la lista
+        "messages": [AIMessage(content=resultado_soporte["respuesta"])],
         "respuesta": resultado_soporte["respuesta"],
         "accion_final": "PEDIR_INFO_CLIENTE"
     }
@@ -221,10 +219,11 @@ def nodo_pedir_info(state: AgentState) -> dict:
 def nodo_agendar_cita(state: AgentState) -> dict:
     print("📅 Ejecutando nodo agendar_cita...")
     texto_pregunta = obtener_pregunta_del_estado(state)
-
     resultado_cita = gestion_agendar_cita(texto_pregunta)
 
     return {
+        # 🌟 CORRECCIÓN: Agregamos el AIMessage a la lista
+        "messages": [AIMessage(content=resultado_cita["respuesta"])],
         "respuesta": resultado_cita["respuesta"],
         "accion_final": "SOLICITAR_DATOS_CITA"
     }

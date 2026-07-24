@@ -1,4 +1,3 @@
-from langgraph.graph import END
 from agent.state import AgentState
 from utils.helpers import obtener_pregunta_del_estado
 
@@ -32,7 +31,7 @@ def arista_decision_rag(state: AgentState) -> str:
     # Suponiendo que tu nodo de documentación guarda un flag 'rag_exito'
     if state.get("rag_exito"):
         print("RAG exitoso, finalizando el flujo.")
-        return END  # Usamos END nativo de LangGraph en lugar de "ok"
+        return "fin_rag"
 
     # Palabras clave adaptadas al contexto inmobiliario/topográfico de Terrenos TOPO
     KEYWORDS_AGENDAR_CITA = [

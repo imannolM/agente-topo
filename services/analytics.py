@@ -16,6 +16,11 @@ from core.config import (
     DATA_DIR
 )
 
+from utils.helpers import (
+    TABLAS_ANALISIS_PERMITIDAS,
+    PERMISOS_ANALISIS
+)
+
 # Definimos la ruta segura absoluta donde se guardará el gráfico generado
 RUTA_GRAFICO = DATA_DIR / "grafico_analisis.png"
 
@@ -63,7 +68,7 @@ def crear_herramientas_analisis(df: pd.DataFrame):
         """Muestra columnas, tipos de datos y una muestra de los primeros registros."""
         return (
             f"Columnas y tipos:\n{df.dtypes.to_string()}\n\n"
-            f"Primeros registros:\n{df.head(5).to_string()}"
+            f"Primeros registros:\n{df.head(2).to_string()}"
         )
 
     @tool

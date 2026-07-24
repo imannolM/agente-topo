@@ -1,8 +1,8 @@
 # --- Núcleo del agente (LangChain / LangGraph) ---
-langchain
-langchain-core
+langchain == 0.3.14
+langchain-core == 0.3.31 
 langchain-classic
-langchain-community
+langchain-community == 0.3.14
 langgraph
 
 # --- LLM y Embeddings ---
@@ -27,3 +27,9 @@ matplotlib
 pydantic
 python-dotenv
 requests
+
+# --- Streamlit ---
+streamlit
+
+# Hice todo un downgrade porque tenía problemas de compatibilidad:
+# pip install langchain==0.3.14 langchain-core==0.3.31 langchain-community==0.3.14 langgraph<1.0.0 langchain-groq<1.0.0 langchain-cohere<1.0.0 langchain-text-splitters<1.0.0

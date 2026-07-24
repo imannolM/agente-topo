@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Literal
+
 from core.llm import llm_groq
 from core.prompts import prompt_triaje
 
@@ -13,4 +14,4 @@ class TriajeOut(BaseModel):
     nuevo_valor: Optional[str] = Field(default=None, description="El nuevo valor a asignar (ej. Aprobado, 5000)")
 
 # 2. La cadena ensamblada lista para usarse
-chain_de_triaje = prompt_triaje_template | llm_groq.with_structured_output(TriajeOut)
+chain_de_triaje = prompt_triaje | llm_groq.with_structured_output(TriajeOut)

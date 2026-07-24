@@ -4,6 +4,7 @@ from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from re import search
 from langchain_community.vectorstores import FAISS
+from core.prompts import prompt_rag
 
 # Importamos las configuraciones de nuestro core
 from core.config import DOCS_DIR, FAISS_DIR
@@ -43,13 +44,6 @@ def construir_o_cargar_retriever():
 
 # 1. Inicializamos el retriever de forma global para que la función lo pueda usar
 retriever = construir_o_cargar_retriever()
-
-prompt_rag = ChatPromptTemplate(
-    [
-        ('system', PROMPT_RAG_TOPO),
-        ('human', 'Contexto de los documentos oficiales:\n{context}\n\nPregunta formulada: {input}')
-    ]
-)
 
 document_chain = create_stuff_documents_chain(llm_groq, prompt_rag)
 

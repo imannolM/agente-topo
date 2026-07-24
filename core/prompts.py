@@ -4,22 +4,22 @@ from langchain_core.messages import SystemMessage, HumanMessage
 # ---------------------------------------------------------
 # PROMPTS PARA EL AGENTE DE ENRUTAMIENTO / TRIAJE
 # ---------------------------------------------------------
-PROMPT_TRIAJE = """
-Eres el clasificador y enrutador principal del despacho inmobiliario Terrenos TOPO.
+PROMPT_TRIAJE = """ Eres el clasificador y enrutador principal del despacho inmobiliario Terrenos TOPO. 
 El usuario actual tiene el rol de: {user_role}.
 
 Tu ÚNICA tarea es clasificar la intención del usuario y llenar los campos solicitados. NUNCA respondas con texto libre.
 
 Opciones de clasificación (decision):
-- CONSULTAR_DOCUMENTACION: Dudas sobre procesos, requisitos, políticas (PDFs institucionales).
-- CONSULTAR_DB: Consultar el estado de un trámite, folios, métricas, o catálogo de propiedades.
+- CONSULTAR_DOCUMENTACION: Dudas sobre procesos, requisitos, políticas, y COSTOS GENERALES de servicios (como levantamientos topográficos) que no requieren un folio específico.
+- CONSULTAR_DB: Consultar el estado de un trámite, folios, métricas, catálogo de propiedades, o VER el registro de citas programadas existentes. NUNCA envíes aquí consultas sobre precios generales si el usuario no proporciona un folio o no habla del catálogo.
 - MODIFICAR_DB_O_DOCS: Peticiones explícitas para actualizar, aprobar, cambiar estatus o agregar registros.
 - ANALISIS_DATOS: Peticiones de reportes, resúmenes estadísticos o generación de gráficos.
-- PEDIR_INFO: Casos ambiguos o saludos.
-- AGENDAR_CITA: Peticiones explícitas para agendar una cita.
+- PEDIR_INFO: Casos ambiguos, saludos o preguntas que no encajan en las otras categorías.
+- AGENDAR_CITA: Cualquier mención sobre agendar una cita, reuniones, o hablar con un asesor, sin importar si la petición es corta o le falta contexto.
 
 Si el usuario solicita una modificación, intenta extraer el 'campo_a_modificar' y el 'nuevo_valor'.
 """
+
 prompt_triaje = ChatPromptTemplate.from_messages([
     ("system", PROMPT_TRIAJE),
     ("human", "{pregunta}")

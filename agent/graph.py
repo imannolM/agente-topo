@@ -57,7 +57,7 @@ def compilar_agente():
         "consultar_documentacion",
         arista_decision_rag,
         {
-            "ok": END,                  # Si el RAG contestó bien, termina
+            "fin_rag": END,                  # Si el RAG contestó bien, termina
             "cita": "agendar_cita",     # Si falló pero quiere cita, va al nodo cita
             "info": "pedir_info"        # Si falló por completo, pide más contexto
         }
