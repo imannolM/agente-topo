@@ -1,8 +1,8 @@
 # --- Núcleo del agente (LangChain / LangGraph) ---
-langchain == 0.3.14
-langchain-core == 0.3.31 
+langchain
+langchain-core
 langchain-classic
-langchain-community == 0.3.14
+langchain-community
 langgraph
 
 # --- LLM y Embeddings ---

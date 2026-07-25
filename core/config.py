@@ -22,3 +22,9 @@ PORT_AIVEN = int(os.getenv("PORT_AIVEN", 3306))
 USER_AIVEN = os.getenv("USER_AIVEN")
 PASSWORD_AIVEN = os.getenv("PASSWORD_AIVEN")
 DATABASE_AIVEN = os.getenv("DATABASE_AIVEN")
+
+# Detectamos la ruta principal de tu proyecto (donde está app.py)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Creamos la ruta dinámica exacta para el gráfico
+RUTA_GRAFICO = BASE_DIR / "data" / "grafico_analisis.png"

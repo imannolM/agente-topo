@@ -1,0 +1,15 @@
+[theme]
+# Color principal para botones y acentos (Verde Bosque)
+primaryColor = "#2E5939"
+
+# Color de fondo principal (Blanco Verdoso)
+backgroundColor = "#F7F9F7"
+
+# Color de fondo para la barra lateral y widgets (Gris Piedra Claro)
+secondaryBackgroundColor = "#EAECEA"
+
+# Color del texto (Carbón)
+textColor = "#2C332D"
+
+# Tipografía limpia y moderna
+font = "sans serif"

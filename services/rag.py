@@ -1,4 +1,5 @@
 import os
+import shutil
 from typing import Dict
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -78,3 +79,35 @@ def busqueda_de_respuestas_RAG(pregunta: str) -> Dict:
         'citaciones': documentos_relacionados,
         'documentos_encontrados': True
     }
+
+def agregar_documento_rag(archivo_bytes: bytes, nombre_archivo: str) -> bool:
+    """
+    Guarda un nuevo PDF en la carpeta de documentos y reconstruye el índice FAISS.
+    """
+    try:
+        # 1. Definir la ruta de guardado
+        ruta_carpeta_docs = os.path.join("data", "documentos")
+        os.makedirs(ruta_carpeta_docs, exist_ok=True)
+        ruta_pdf = os.path.join(ruta_carpeta_docs, nombre_archivo)
+        
+        # 2. Guardar el archivo físicamente
+        with open(ruta_pdf, "wb") as f:
+            f.write(archivo_bytes)
+            
+        print(f"📄 Nuevo documento guardado en: {ruta_pdf}")
+        
+        # 3. Borrar el índice FAISS antiguo para forzar su reconstrucción
+        ruta_indice = os.path.join("data", "faiss_index")
+        if os.path.exists(ruta_indice):
+            shutil.rmtree(ruta_indice)
+            print("🗑️ Índice FAISS anterior eliminado.")
+            
+        # 4. Volver a construir el índice llamando a la función que ya tienes
+        global retriever 
+        retriever = construir_o_cargar_retriever()
+        print("✅ Nuevo índice FAISS construido con éxito.")
+        
+        return True
+    except Exception as e:
+        print(f"❌ Error al agregar documento al RAG: {e}")
+        return False

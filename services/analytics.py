@@ -13,17 +13,14 @@ from core.config import (
     PASSWORD_AIVEN,
     DATABASE_AIVEN,
     CA_CERT_PATH,
-    DATA_DIR
+    DATA_DIR,
+    RUTA_GRAFICO
 )
 
 from utils.helpers import (
     TABLAS_ANALISIS_PERMITIDAS,
     PERMISOS_ANALISIS
 )
-
-# Definimos la ruta segura absoluta donde se guardará el gráfico generado
-RUTA_GRAFICO = DATA_DIR / "grafico_analisis.png"
-
 
 def extraer_df_desde_mysql(nombre_tabla: str) -> pd.DataFrame:
     """Carga únicamente tablas aprobadas para análisis."""
@@ -125,11 +122,12 @@ def crear_herramientas_analisis(df: pd.DataFrame):
 
             plt.tight_layout()
 
-            # Guardado en ruta dinámica para Streamlit
-            fig.savefig(str(RUTA_GRAFICO), bbox_inches="tight")
+            # Usamos la ruta dinámica que importamos
+            ruta_grafico = str(RUTA_GRAFICO) 
+            fig.savefig(ruta_grafico, bbox_inches="tight")
             plt.close(fig)
-
-            return f"Gráfico generado correctamente en '{RUTA_GRAFICO}'."
+        
+            return f"Gráfico generado correctamente en '{ruta_grafico}'."
 
         except ValueError as error:
             return str(error)

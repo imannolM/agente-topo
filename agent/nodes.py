@@ -1,7 +1,9 @@
 import json
 import re
+import os
 from pydantic import BaseModel, Field
 from typing import Optional, List
+from core.config import RUTA_GRAFICO
 
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import PromptTemplate
@@ -188,18 +190,30 @@ def nodo_analisis_datos(state: AgentState) -> dict:
         return_intermediate_steps=True,
     )
 
-    resultado = ejecutor.invoke({"input": texto_pregunta})
+    # 1. Borramos el gráfico anterior (si existe) para evitar falsos positivos
+    ruta_grafico = str(RUTA_GRAFICO)
+    
+    if os.path.exists(ruta_grafico):
+        os.remove(ruta_grafico)
 
-    se_genero_grafico = any(
-        accion.tool == "generar_grafico"
-        for accion, _ in resultado.get("intermediate_steps", [])
-    )
+    # 2. Ejecutamos el agente (usa la variable ejecutor o agente según tu código actual)
+    try:
+        resultado = ejecutor.invoke({"input": texto_pregunta})
+        texto_respuesta = resultado.get("output", "")
+    except AttributeError:
+        resultado = agente.invoke({"messages": [("user", texto_pregunta)]})
+        texto_respuesta = resultado["messages"][-1].content
+        
+    # Detectamos si se generó un gráfico verificando si el archivo apareció mágicamente
+    se_genero_grafico = os.path.exists(ruta_grafico)
 
+    # Retornamos el estado asegurándonos de incluir el AIMessage
     return {
-        "messages": [AIMessage(content=resultado["output"])],
-        "respuesta": resultado["output"],
+        "respuesta": texto_respuesta,
         "accion_final": "ANALISIS_COMPLETADO",
-        "grafico_generado": "grafico_analisis.png" if se_genero_grafico else None,
+        "grafico_generado": ruta_grafico if se_genero_grafico else None,
+        # 🌟 SUPER IMPORTANTE: Esto permite que app.py ancle la imagen a la memoria visual
+        "messages": [AIMessage(content=texto_respuesta)]
     }
 
 # --- NODO: PEDIR INFO ---
