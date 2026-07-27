@@ -144,9 +144,9 @@ cd agente-topo
 
 2. Crear y activar un entorno virtual (Python 3.11 recomendado):
 python -m venv .venv
-# En Windows:
+* En Windows:
 .venv\Scripts\activate
-# En Mac/Linux:
+* En Mac/Linux:
 source .venv/bin/activate
 
 3. Instalar dependencias:
