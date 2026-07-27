@@ -100,17 +100,17 @@ agente_topo/
 ## 💬 Ejemplos de Interacción
 El Agente Topo es capaz de manejar contextos mixtos de forma fluida. Aquí tienes ejemplos reales de lo que puede responder:
 
-📄 Ejemplo 1: Consulta Documental (RAG)
+* 📄 Ejemplo 1: Consulta Documental (RAG)
 Usuario: "¿Cuáles son los requisitos para apartar un terreno según el reglamento interno?"
 
 Respuesta del Agente: "Basado en los documentos proporcionados, para apartar un lote en Terrenos TOPO el cliente debe presentar una identificación oficial vigente, un comprobante de domicilio no mayor a 3 meses y cubrir el 10% del enganche inicial. (Fuente: manual_ventas_2024.pdf)."
 
-🗄️ Ejemplo 2: Análisis de Base de Datos
+* 🗄️ Ejemplo 2: Análisis de Base de Datos
 Usuario: "¿Cuál fue el terreno con mayor costo operativo en el último trimestre?"
 
 Respuesta del Agente: "Revisando la base de datos de costos operativos, el terreno con mayor gasto fue el Lote B-42 en la sección Norte, con un acumulado de $45,200 MXN en el último trimestre debido a movimientos de tierra."
 
-📊 Ejemplo 3: Generación de Gráficos (Data Analytics)
+* 📊 Ejemplo 3: Generación de Gráficos (Data Analytics)
 Usuario: "Genera un gráfico con los costos operativos de todos los terrenos."
 
 Respuesta del Agente: "¡Claro! He generado el gráfico solicitado con la distribución de los costos operativos por terreno." (El sistema despliega exitosamente en el chat una imagen dinámica de un gráfico de barras a todo color).
@@ -139,7 +139,7 @@ Solución: Realizamos un pivote arquitectónico hacia Streamlit Community Cloud.
 Si deseas correr el proyecto en tu propia máquina para realizar modificaciones o pruebas, sigue estos pasos:
 
 1. Clonar el repositorio:
-git clone [https://github.com/tu-usuario/agente-topo.git](https://github.com/tu-usuario/agente-topo.git)
+git clone [https://github.com/imannolM/agente-topo.git](https://github.com/tu-usuario/agente-topo.git)
 cd agente-topo
 
 2. Crear y activar un entorno virtual (Python 3.11 recomendado):
@@ -154,13 +154,15 @@ pip install -r requirements.txt
 
 4. Configurar Variables de Entorno:
 Cambia el nombre del archivo .env.example a .env (o crea uno nuevo) en la raíz del proyecto y agrega tus claves privadas:
-GROQ_API_KEY=tu_clave_aqui
-COHERE_API_KEY=tu_clave_aqui
-HOST_AIVEN=tu_host.aivencloud.com
-PORT_AIVEN=10411
-USER_AIVEN=avnadmin
-PASSWORD_AIVEN=tu_password
-DATABASE_AIVEN=defaultdb
+
+* GROQ_API_KEY=tu_clave_aqui
+* COHERE_API_KEY=tu_clave_aqui
+* HOST_AIVEN=tu_host.aivencloud.com
+* PORT_AIVEN=10411
+* USER_AIVEN=avnadmin
+* PASSWORD_AIVEN=tu_password
+* DATABASE_AIVEN=defaultdb
 
 5. Ejecutar la aplicación:
+
 streamlit run app.py
