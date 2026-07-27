@@ -1,7 +1,6 @@
 # 🏗️ Agente Topo - Asistente de IA para Terrenos TOPO
 ![Logo Terrenos TOPO](logo_topo.png)
 
-[Streamlit App] (https://agente-topo.streamlit.app/)
 
 **Agente Topo** es un asistente conversacional inteligente impulsado por Inteligencia Artificial, diseñado específicamente para optimizar la gestión operativa, el análisis de datos financieros y la consulta de normativas internas de la empresa de bienes raíces "Terrenos TOPO".
 
