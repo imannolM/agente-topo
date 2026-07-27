@@ -75,7 +75,11 @@ def consulta_base_de_datos(texto_pregunta: str, user_role: str, user_folio: str 
             "bienes raíces",
             "bienes raices",
             "propiedades",
-            "terrenos en venta"
+            "terrenos en venta",
+            "terrenos disponibles",
+            "terreno disponible",
+            "inventario",
+            "terrenos tienes"
         ]
     ):
         tabla = TABLA_INVENTARIO
