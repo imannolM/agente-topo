@@ -164,4 +164,4 @@ Cambia el nombre del archivo .env.example a .env (o crea uno nuevo) en la raíz 
 * DATABASE_AIVEN=defaultdb
 
 5. Ejecutar la aplicación:
- streamlit run app.py
+* streamlit run app.py
