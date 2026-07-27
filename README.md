@@ -94,7 +94,7 @@ agente_topo/
 └── utils/                       # Funciones auxiliares
     ├── __init__.py
     └── helpers.py               # Funciones de apoyo (normalización, utilidades, etc.)
-
+```
 ---
 
 ## 💬 Ejemplos de Interacción
